@@ -6,8 +6,8 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 as build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["resturant.api/resturant.api.csproj", "resturant.api/"]
-RUN dotnet restore "resturant.api/resturant.api.csproj"
+# COPY ["resturant.api/resturant.api.csproj", "resturant.api/"]
+RUN dotnet restore "resturant.api.csproj"
 COPY . .
 WORKDIR "/src/resturant.api"
 RUN dotnet build "resturant.api.csproj" -c $BUILD_CONFIGURATION -o /app/build

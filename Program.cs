@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using resturant.api.Data;
+using resturant.api.Data.mysql;
 using resturant.api.Models;
 using resturant.api.Services;
 using resturant.api.Services.Interfaces;
@@ -17,12 +18,19 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<DefaultContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"))
-);
+// builder.Services.AddDbContext<DefaultContext>(options =>
+//     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"))
+// );
+
+// builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+//     .AddEntityFrameworkStores<DefaultContext>();
+
+builder.Services.AddDbContext<MySqlDbContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("mysql"),
+    new MySqlServerVersion(new Version(8, 0, 23)))); 
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<DefaultContext>();
+    .AddEntityFrameworkStores<MySqlDbContext>();
 
 
 builder.Services.AddAuthentication(options =>
